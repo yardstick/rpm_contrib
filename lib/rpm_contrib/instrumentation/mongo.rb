@@ -22,7 +22,7 @@ DependencyDetection.defer do
           name, collection = f if f
         end
 
-        trace_execution_scoped("Database/#{collection}/#{name}") do
+        self.class.trace_execution_scoped("Database/#{collection}/#{name}") do
           t0 = Time.now
           res = instrument_without_newrelic_trace(name, payload, &blk)
           NewRelic::Agent.instance.transaction_sampler.notice_sql(payload.inspect, nil, (Time.now - t0).to_f)
